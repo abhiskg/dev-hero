@@ -2,6 +2,7 @@ import { useState, useContext, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
+import userIcon from "../../assets/icons/userIcon.svg";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -21,7 +22,7 @@ const Header = () => {
         <Link className="text-xl font-semibold" to="/">
           Dev Hero
         </Link>
-        <ul className="hidden gap-5 font-medium sm:flex ">
+        <ul className="hidden items-center gap-5 font-medium sm:flex">
           <li className="hover:underline">
             <NavLink
               to="/home"
@@ -47,7 +48,21 @@ const Header = () => {
             </NavLink>
           </li>
           {authContext?.user && authContext.user.uid ? (
-            <li>Profile</li>
+            <li className="cursor-pointer">
+              {authContext?.user?.photoURL ? (
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src={authContext?.user?.photoURL}
+                  alt="User Photo"
+                />
+              ) : (
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src={userIcon}
+                  alt="User Photo"
+                />
+              )}
+            </li>
           ) : (
             <li className="hover:underline">
               <NavLink
@@ -70,9 +85,9 @@ const Header = () => {
                   id="toggle"
                   className="sr-only"
                 />
-                <div className="h-8 w-14 rounded-full bg-gray-600"></div>
+                <div className="h-7 w-12 rounded-full bg-gray-600"></div>
                 <div
-                  className={`absolute top-1 left-1 h-6 w-6 rounded-full bg-white transition ${
+                  className={`absolute top-1 left-1 h-5 w-5 rounded-full bg-white transition ${
                     themeContext?.isDark && `translate-x-full`
                   }`}
                 ></div>

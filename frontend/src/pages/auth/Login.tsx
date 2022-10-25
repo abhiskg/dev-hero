@@ -1,8 +1,16 @@
-import { ThemeContext } from "../../context/ThemeContext";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
-  const themeContext = useContext(ThemeContext);
+  const authContext = useContext(AuthContext);
+
+  const handleSubmit = () => {};
+
+  const handleGoogleLogin = () => {
+    authContext?.googleSignIn();
+  };
+
   return (
     <div>
       <div className="mx-auto w-full max-w-md rounded-md p-4 shadow dark:bg-gray-900 dark:text-gray-100 sm:p-8">
@@ -10,7 +18,10 @@ const Login = () => {
           Login to your account
         </h2>
 
-        <form className="ng-untouched ng-pristine ng-valid space-y-8">
+        <form
+          onSubmit={handleSubmit}
+          className="ng-untouched ng-pristine ng-valid space-y-8"
+        >
           <div className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm">
@@ -21,6 +32,7 @@ const Login = () => {
                 name="email"
                 id="email"
                 placeholder="leroy@jenkins.com"
+                required
                 className="w-full rounded-md border px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
               />
             </div>
@@ -42,6 +54,7 @@ const Login = () => {
                 name="password"
                 id="password"
                 placeholder="*****"
+                required
                 className="w-full rounded-md border px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
               />
             </div>
@@ -61,6 +74,7 @@ const Login = () => {
 
         <div className="my-6 flex gap-3">
           <button
+            onClick={handleGoogleLogin}
             aria-label="Login with Google"
             type="button"
             className="flex w-full items-center justify-center space-x-4 rounded-md border p-4 focus:ring-2 focus:ring-violet-400 focus:ring-offset-1 dark:border-gray-400"
@@ -90,13 +104,13 @@ const Login = () => {
 
         <p className="text-center text-sm dark:text-gray-400">
           Dont have account?
-          <a
-            href="#"
+          <Link
+            to="/register"
             rel="noopener noreferrer"
             className="hover:underline focus:underline"
           >
-            Sign up here
-          </a>
+            Create here
+          </Link>
         </p>
       </div>
     </div>
