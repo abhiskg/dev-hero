@@ -1,11 +1,37 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthContext } from "../../context/AuthContext";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const RegisterSchema = z.object({
+  name: z.string().min(1, { message: "Please Enter your name" }),
+  profilePic: z.string().url({ message: "Invalid url" }),
+  email: z.string().email({ message: "Invalid Email" }),
+  password: z
+    .string()
+    .min(8, { message: "Password Should be minimum 8 char long" }),
+});
+
+type RegisterSchemaType = z.infer<typeof RegisterSchema>;
 
 const Register = () => {
   const authContext = useContext(AuthContext);
 
-  const handleSubmit = () => {};
+  const {
+    handleSubmit,
+    register,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterSchemaType>({
+    resolver: zodResolver(RegisterSchema),
+  });
+
+  const onSubmit: SubmitHandler<RegisterSchemaType> = (data) => {
+    const { name, email, password, profilePic } = data;
+    authContext?.createAccount(email, password);
+  };
 
   const handleGoogleLogin = () => {
     authContext?.googleSignIn();
@@ -19,7 +45,7 @@ const Register = () => {
         </h2>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="ng-untouched ng-pristine ng-valid space-y-8"
         >
           <div className="space-y-4">
@@ -28,26 +54,30 @@ const Register = () => {
                 Name
               </label>
               <input
-                type="name"
-                name="name"
+                type="text"
                 id="name"
+                {...register("name")}
+                disabled={isSubmitting}
                 placeholder="Enter your full name"
-                required
-                className="w-full rounded-md border px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+                className="w-full rounded-md border px-3 py-2 invalid:border-red-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
               />
+              {errors.name?.message && <p>{errors.name?.message}</p>}
             </div>
             <div className="space-y-2">
-              <label htmlFor="profile-pic" className="block text-sm">
+              <label htmlFor="profilePic" className="block text-sm">
                 Profile Picture
               </label>
               <input
-                type="profile-pic"
-                name="profile-pic"
-                id="profile-pic"
+                type="profilePic"
+                {...register("profilePic")}
+                id="profilePic"
+                disabled={isSubmitting}
                 placeholder="Enter the picture link"
-                required
                 className="w-full rounded-md border px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
               />
+              {errors.profilePic?.message && (
+                <p>{errors.profilePic?.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm">
@@ -55,12 +85,13 @@ const Register = () => {
               </label>
               <input
                 type="email"
-                name="email"
+                {...register("email")}
                 id="email"
+                disabled={isSubmitting}
                 placeholder="leroy@jenkins.com"
-                required
                 className="w-full rounded-md border px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
               />
+              {errors.email?.message && <p>{errors.email?.message}</p>}
             </div>
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm">
@@ -68,16 +99,18 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                name="password"
+                {...register("password")}
+                disabled={isSubmitting}
                 id="password"
                 placeholder="*****"
-                required
                 className="w-full rounded-md border px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
               />
+              {errors.password?.message && <p>{errors.password?.message}</p>}
             </div>
           </div>
           <button
-            type="button"
+            type="submit"
+            disabled={isSubmitting}
             className="w-full rounded-md px-8 py-3 font-semibold dark:bg-violet-400 dark:text-gray-900"
           >
             Register
