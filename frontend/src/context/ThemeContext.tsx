@@ -1,25 +1,28 @@
-// import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-// interface ThemeContextProps {
-//   isDark: boolean;
-//   setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
-// }
+interface ThemeContextProps {
+  isDark: boolean;
+  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-// export const ThemeContext = createContext<ThemeContextProps | null>(null);
+export const ThemeContext = createContext<ThemeContextProps | null>(null);
 
-// const ThemeContextProvider = ({ children }: { children: React.ReactNode }) => {
-//   const [isDark, setIsDark] = useState(false);
+const ThemeContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isDark, setIsDark] = useState(false);
 
-//   return (
-//     <ThemeContext.Provider value={{ isDark, setIsDark }}>
-//       {children}
-//     </ThemeContext.Provider>
-//   );
-// };
+  useEffect(() => {
+    const data = localStorage.getItem("dev-hero-theme");
+    if (data) {
+      const result = JSON.parse(data) as boolean;
+      setIsDark(result);
+    }
+  }, []);
 
-// export default ThemeContextProvider;
-const ThemeContext = () => {
-  return <div></div>;
+  return (
+    <ThemeContext.Provider value={{ isDark, setIsDark }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
-export default ThemeContext;
+export default ThemeContextProvider;

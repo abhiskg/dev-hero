@@ -1,4 +1,8 @@
+import { ThemeContext } from "../../context/ThemeContext";
+import { useContext } from "react";
+
 const Login = () => {
+  const themeContext = useContext(ThemeContext);
   return (
     <div>
       <div className="mx-auto w-full max-w-md rounded-md p-4 shadow dark:bg-gray-900 dark:text-gray-100 sm:p-8">

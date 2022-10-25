@@ -1,10 +1,20 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
   const authContext = useContext(AuthContext);
+  const themeContext = useContext(ThemeContext)!;
+  const themeRef = useRef<HTMLInputElement | null>(null);
+
+  const handleDarkMode = () => {
+    const checkbox = themeRef.current?.checked as boolean;
+    themeContext.setIsDark(!themeContext.isDark);
+    localStorage.setItem("dev-hero-theme", checkbox.toString());
+  };
+
   return (
     <header className=" bg-primary sticky top-0 z-10 h-16">
       <nav className="custom-width mx-auto flex h-full items-center justify-between">
@@ -14,7 +24,7 @@ const Header = () => {
         <ul className="hidden gap-5 font-medium sm:flex ">
           <li className="hover:underline">
             <NavLink
-              to="/"
+              to="/home"
               className={({ isActive }) => (isActive ? " underline" : "")}
             >
               Home
@@ -48,6 +58,27 @@ const Header = () => {
               </NavLink>
             </li>
           )}
+          <li>
+            <label htmlFor="toggle">
+              <div className="relative cursor-pointer">
+                <input
+                  ref={themeRef}
+                  type="checkbox"
+                  checked={themeContext.isDark}
+                  onChange={handleDarkMode}
+                  name=""
+                  id="toggle"
+                  className="sr-only"
+                />
+                <div className="h-8 w-14 rounded-full bg-gray-600"></div>
+                <div
+                  className={`absolute top-1 left-1 h-6 w-6 rounded-full bg-white transition ${
+                    themeContext?.isDark && `translate-x-full`
+                  }`}
+                ></div>
+              </div>
+            </label>
+          </li>
         </ul>
 
         {/* Hamburger Menu */}
