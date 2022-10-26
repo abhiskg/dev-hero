@@ -9,7 +9,7 @@ function App() {
   const themeContext = useContext(ThemeContext);
 
   return (
-    <div className={`${themeContext?.isDark && "dark"}`}>
+    <div className={`${themeContext?.isDark && "dark"} `}>
       <Toaster />
       <RouterProvider router={rootRouter} />
     </div>

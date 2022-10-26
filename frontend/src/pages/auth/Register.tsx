@@ -78,7 +78,7 @@ const Register = () => {
           <div className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="name" className="block text-sm">
-                Name
+                Full Name
               </label>
               <input
                 type="text"

@@ -6,7 +6,9 @@ const Root = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="py-10 dark:bg-gray-800">
+        <Outlet />
+      </div>
       <Footer />
     </>
   );

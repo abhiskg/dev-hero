@@ -1,5 +1,9 @@
 const SideNav = () => {
-  return <div>Sidenav</div>;
+  return (
+    <div>
+      <h2>Course Categories</h2>
+    </div>
+  );
 };
 
 export default SideNav;

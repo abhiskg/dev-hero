@@ -1,16 +1,18 @@
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { GithubAuthProvider } from "firebase/auth";
+import { AuthContext } from "../../context/AuthContext";
 
 const GithubLogin = () => {
   const authContext = useContext(AuthContext);
   const provider = new GithubAuthProvider();
+  const navigate = useNavigate();
 
   const handleGithubLogin = () => {
     authContext
       ?.signInWithProvider(provider)
-      .then(({ user }) => {
+      .then(() => {
         toast.success("Login Successful");
       })
       .catch((err: any) => {

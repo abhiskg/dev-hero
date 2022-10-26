@@ -12,6 +12,9 @@
   .auth-button {
     @apply w-full rounded-md px-8 py-3 font-semibold dark:bg-violet-400 dark:text-gray-900;
   }
+  .footer-link-text {
+    @apply uppercase tracking-wide dark:text-gray-50 dark:hover:text-violet-400;
+  }
 }
 
 .custom-width {
