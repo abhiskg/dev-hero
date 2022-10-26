@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="divide-y px-4 dark:bg-gray-900 dark:text-gray-100">
+    <footer className="divide-y bg-violet-400 px-4 dark:bg-gray-900 dark:text-gray-100">
       <div className="custom-width mx-auto flex flex-col items-center justify-between space-y-8 py-10 md:flex-row md:space-y-0">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full dark:bg-violet-400">
@@ -25,6 +25,14 @@ const Footer = () => {
           <span className="text-2xl font-semibold">Dev Hero</span>
         </div>
         <div className="flex gap-5">
+          <Link to="/register" className="footer-link-text">
+            Register
+          </Link>
+
+          <Link to="/login" className="footer-link-text">
+            Login
+          </Link>
+
           <Link to="/home" className="footer-link-text">
             Home
           </Link>
@@ -39,14 +47,6 @@ const Footer = () => {
 
           <Link to="/blog" className="footer-link-text">
             Blog
-          </Link>
-
-          <Link to="/login" className="footer-link-text">
-            Login
-          </Link>
-
-          <Link to="/register" className="footer-link-text">
-            Register
           </Link>
         </div>
       </div>
