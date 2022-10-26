@@ -1,10 +1,12 @@
 import {
+  AuthProvider,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
   User,
   UserCredential,
 } from "firebase/auth";
@@ -16,11 +18,10 @@ interface AuthContextProps {
   loading: boolean;
   createAccount: (email: string, password: string) => Promise<UserCredential>;
   signIn: (email: string, password: string) => Promise<UserCredential>;
-  googleSignIn: () => Promise<UserCredential>;
+  signInWithProvider: (provider: AuthProvider) => Promise<UserCredential>;
   logOut: () => Promise<void>;
+  updateUser: (name: string, profilePic: string, user: User) => Promise<void>;
 }
-
-const googleProvider = new GoogleAuthProvider();
 
 export const AuthContext = createContext<null | AuthContextProps>(null);
 
@@ -30,7 +31,13 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (
+        currentUser === null ||
+        currentUser.emailVerified ||
+        currentUser.providerData[0].providerId === "github.com"
+      ) {
+        setUser(currentUser);
+      }
       setLoading(false);
     });
 
@@ -44,16 +51,22 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const updateUser = () => {};
+  const updateUser = (name: string, profilePic: string, user: User) => {
+    setLoading(true);
+    return updateProfile(user, {
+      displayName: name,
+      photoURL: profilePic,
+    });
+  };
 
   const signIn = (email: string, password: string) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const googleSignIn = () => {
+  const signInWithProvider = (provider: AuthProvider) => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+    return signInWithPopup(auth, provider);
   };
 
   const logOut = () => {
@@ -63,7 +76,15 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, createAccount, signIn, googleSignIn, logOut }}
+      value={{
+        user,
+        loading,
+        createAccount,
+        signIn,
+        signInWithProvider,
+        logOut,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

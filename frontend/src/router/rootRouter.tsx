@@ -6,6 +6,7 @@ import Blog from "../pages/blog/Blog";
 import CourseDetails from "../pages/course/CourseDetails";
 import Courses from "../pages/course/Courses";
 import ErrorPage from "../pages/error/ErrorPage";
+import Faq from "../pages/faq/Faq";
 import Home from "../pages/main/Home";
 
 const rootRouter = createBrowserRouter([
@@ -37,6 +38,10 @@ const rootRouter = createBrowserRouter([
       {
         path: "/course/:id",
         element: <CourseDetails />,
+      },
+      {
+        path: "/faq",
+        element: <Faq />,
       },
       {
         path: "/blog",

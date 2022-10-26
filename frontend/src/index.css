@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .error-message {
+    @apply text-xs font-medium text-red-500;
+  }
+  .input-form {
+    @apply w-full rounded-md border px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400;
+  }
+  .auth-button {
+    @apply w-full rounded-md px-8 py-3 font-semibold dark:bg-violet-400 dark:text-gray-900;
+  }
+}
+
 .custom-width {
   width: min(94%, 1300px);
 }

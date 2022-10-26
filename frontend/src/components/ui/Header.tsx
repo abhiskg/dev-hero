@@ -1,8 +1,10 @@
 import { useState, useContext, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 import userIcon from "../../assets/icons/userIcon.svg";
+import logo from "../../assets/icons/logo.svg";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -16,13 +18,25 @@ const Header = () => {
     localStorage.setItem("dev-hero-theme", checkbox.toString());
   };
 
+  const handleLogout = () => {
+    authContext
+      ?.logOut()
+      .then(() => {
+        toast.success("Logout Successful");
+      })
+      .catch((err: any) => {
+        console.log(err.message);
+      });
+  };
+
   return (
-    <header className=" bg-primary sticky top-0 z-10 h-16">
+    <header className=" bg-primary sticky top-0 z-10 h-16 dark:bg-gray-800">
       <nav className="custom-width mx-auto flex h-full items-center justify-between">
-        <Link className="text-xl font-semibold" to="/">
-          Dev Hero
+        <Link className="flex items-center text-xl font-semibold" to="/">
+          <img src={logo} alt="" />
+          <span>Dev Hero</span>
         </Link>
-        <ul className="hidden items-center gap-5 font-medium sm:flex">
+        <ul className="relative hidden items-center gap-5 font-medium sm:flex">
           <li className="hover:underline">
             <NavLink
               to="/home"
@@ -41,6 +55,14 @@ const Header = () => {
           </li>
           <li className="hover:underline">
             <NavLink
+              to="/faq"
+              className={({ isActive }) => (isActive ? " underline" : "")}
+            >
+              FAQ
+            </NavLink>
+          </li>
+          <li className="hover:underline">
+            <NavLink
               to="/blog"
               className={({ isActive }) => (isActive ? " underline" : "")}
             >
@@ -48,10 +70,10 @@ const Header = () => {
             </NavLink>
           </li>
           {authContext?.user && authContext.user.uid ? (
-            <li className="cursor-pointer">
+            <li className="group  cursor-pointer">
               {authContext?.user?.photoURL ? (
                 <img
-                  className="h-10 w-10 rounded-full"
+                  className="mx-auto h-10 w-10 rounded-full object-cover"
                   src={authContext?.user?.photoURL}
                   alt="User Photo"
                 />
@@ -62,6 +84,17 @@ const Header = () => {
                   alt="User Photo"
                 />
               )}
+              <ul className="absolute top-10 left-0 right-0 z-50 ml-40 hidden rounded bg-white  text-gray-800 shadow group-hover:block">
+                <li className="rounded p-2 hover:bg-gray-500">
+                  {authContext.user.displayName}
+                </li>
+                <li
+                  className="rounded p-2 hover:bg-gray-500"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </li>
+              </ul>
             </li>
           ) : (
             <li className="hover:underline">
