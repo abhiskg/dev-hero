@@ -1,0 +1,23 @@
+{
+  "name": "dev-hero",
+  "version": "1.0.0",
+  "description": "Hello",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhiskg/dev-hero.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhiskg/dev-hero/issues"
+  },
+  "homepage": "https://github.com/abhiskg/dev-hero#readme",
+  "devDependencies": {
+    "concurrently": "^7.5.0"
+  }
+}

@@ -34,10 +34,13 @@ const rootRouter = createBrowserRouter([
       {
         path: "/courses",
         element: <Courses />,
+        loader: () => fetch("http://localhost:5000/courses"),
       },
       {
         path: "/course/:id",
         element: <CourseDetails />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/course/${params.id}`),
       },
       {
         path: "/faq",
