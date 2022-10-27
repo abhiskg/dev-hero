@@ -3,11 +3,13 @@ import Root from "../layout/Root";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Blog from "../pages/blog/Blog";
+import Checkout from "../pages/checkout/Checkout";
 import CourseDetails from "../pages/course/CourseDetails";
 import Courses from "../pages/course/Courses";
 import ErrorPage from "../pages/error/ErrorPage";
 import Faq from "../pages/faq/Faq";
 import Home from "../pages/main/Home";
+import PrivateRoute from "./PrivateRoute";
 
 const rootRouter = createBrowserRouter([
   {
@@ -49,6 +51,14 @@ const rootRouter = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/checkout",
+        element: (
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        ),
       },
     ],
   },

@@ -21,6 +21,7 @@ interface AuthContextProps {
   signInWithProvider: (provider: AuthProvider) => Promise<UserCredential>;
   logOut: () => Promise<void>;
   updateUser: (name: string, profilePic: string, user: User) => Promise<void>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AuthContext = createContext<null | AuthContextProps>(null);
@@ -79,6 +80,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         user,
         loading,
+        setLoading,
         createAccount,
         signIn,
         signInWithProvider,

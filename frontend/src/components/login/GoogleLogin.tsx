@@ -2,16 +2,22 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import { GoogleAuthProvider } from "firebase/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const GoogleLogin = () => {
   const authContext = useContext(AuthContext);
   const provider = new GoogleAuthProvider();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location?.state?.from?.pathname || "/";
 
   const handleGoogleLogin = () => {
     authContext
       ?.signInWithProvider(provider)
       .then(() => {
         toast.success("Login Successful");
+        navigate(from, { replace: true });
       })
       .catch((err: any) => {
         toast.error("Something went wrong, please try again later");

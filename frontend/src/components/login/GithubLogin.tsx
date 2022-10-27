@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { GithubAuthProvider } from "firebase/auth";
 import { AuthContext } from "../../context/AuthContext";
@@ -8,12 +8,16 @@ const GithubLogin = () => {
   const authContext = useContext(AuthContext);
   const provider = new GithubAuthProvider();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location?.state?.from?.pathname || "/";
 
   const handleGithubLogin = () => {
     authContext
       ?.signInWithProvider(provider)
       .then(() => {
         toast.success("Login Successful");
+        navigate(from, { replace: true });
       })
       .catch((err: any) => {
         toast.error("Something went wrong, please try again later");

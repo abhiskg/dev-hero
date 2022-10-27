@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +28,11 @@ const Login = () => {
   const [unVerifiedUser, setUnVerifiedUser] = useState<null | User>(null);
   const authContext = useContext(AuthContext);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location?.state?.from?.pathname || "/";
+
   const {
     handleSubmit,
     register,
@@ -50,6 +55,7 @@ const Login = () => {
           setEmailVerified(false);
         } else {
           toast.success("Login successful");
+          navigate(from, { replace: true });
         }
         reset();
       })
@@ -64,6 +70,9 @@ const Login = () => {
           setLoading(false);
           toast.error("Something went wrong, try again later");
         }
+      })
+      .finally(() => {
+        authContext.setLoading(false);
       });
   };
 
