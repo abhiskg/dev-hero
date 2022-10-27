@@ -5,4 +5,8 @@ export interface CourseType {
   alt: string;
   price: boolean;
   author: string;
+  category: string;
+  duration: boolean;
+  ratings: boolean;
+  description: string;
 }

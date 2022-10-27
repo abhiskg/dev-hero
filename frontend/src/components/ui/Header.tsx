@@ -106,12 +106,12 @@ const Header = () => {
                   alt="User Photo"
                 />
               )}
-              <ul className="absolute top-10 left-0 right-0 z-50 ml-40 hidden rounded bg-white  text-gray-800 shadow group-hover:block">
-                <li className="rounded p-2 hover:bg-gray-500">
+              <ul className="absolute top-10 left-0 right-0 z-50 ml-40 hidden rounded bg-violet-400  shadow group-hover:block dark:bg-gray-900 dark:text-gray-100">
+                <li className="rounded p-2 hover:bg-violet-500 dark:hover:bg-gray-800">
                   {authContext.user.displayName}
                 </li>
                 <li
-                  className="rounded p-2 hover:bg-gray-500"
+                  className="rounded p-2 hover:bg-violet-500 dark:hover:bg-gray-800"
                   onClick={handleLogout}
                 >
                   Logout
@@ -192,17 +192,17 @@ const Header = () => {
           className="z-50 flex h-5 w-6 cursor-pointer flex-col items-end justify-between sm:hidden "
         >
           <span
-            className={`h-[0.1rem] rounded-lg bg-black transition-transform  duration-100 ease-in-out ${
+            className={`h-[0.1rem] rounded-lg bg-black transition-transform duration-100  ease-in-out dark:bg-gray-100 ${
               menu ? "w-6 translate-y-1 rotate-45" : "w-full"
             }`}
           />
           <span
-            className={`h-[0.1rem] rounded-lg bg-black  ${
+            className={`h-[0.1rem] rounded-lg bg-black dark:bg-gray-100  ${
               menu ? "hidden" : "w-full"
             }`}
           />
           <span
-            className={`h-[0.1rem] rounded-lg bg-black transition-transform duration-100 ease-in-out ${
+            className={`h-[0.1rem] rounded-lg bg-black transition-transform duration-100 ease-in-out dark:bg-gray-100 ${
               menu ? "w-6 -translate-y-3.5 -rotate-45" : "w-full"
             }`}
           />
@@ -212,33 +212,23 @@ const Header = () => {
       <nav
         className={`${
           menu ? "translate-x-48" : "translate-x-full"
-        } no-scrollbar fixed top-0 right-0 bottom-0 z-40 w-full overflow-y-auto bg-violet-400 transition-transform duration-200 ease-in-out dark:bg-gray-900 md:hidden `}
+        } no-scrollbar fixed top-0 right-0 bottom-0 z-40 w-full overflow-y-auto bg-violet-400 transition-transform duration-200 ease-in-out dark:bg-gray-900 dark:text-gray-100 md:hidden `}
       >
         <ul className="ml-10 mt-32 mb-10 flex flex-col gap-7 ">
           <li onClick={() => setMenu(false)}>
-            <Link className="text-black" to="/home">
-              Home
-            </Link>
+            <Link to="/home">Home</Link>
           </li>
           <li onClick={() => setMenu(false)}>
-            <Link className="text-black" to="/courses">
-              Courses
-            </Link>
+            <Link to="/courses">Courses</Link>
           </li>
           <li onClick={() => setMenu(false)}>
-            <Link className="text-black" to="/faq">
-              FAQ
-            </Link>
+            <Link to="/faq">FAQ</Link>
           </li>
           <li onClick={() => setMenu(false)}>
-            <Link to="/blog" className="text-black">
-              Blog
-            </Link>
+            <Link to="/blog">Blog</Link>
           </li>
           <li onClick={() => setMenu(false)}>
-            <Link to="/login" className="text-black">
-              Login
-            </Link>
+            <Link to="/login">Login</Link>
           </li>
         </ul>
       </nav>
