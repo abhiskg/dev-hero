@@ -6,7 +6,7 @@ const Root = () => {
   return (
     <>
       <Header />
-      <div className="py-10 dark:bg-gray-800">
+      <div className=" bg-gray-50 py-10 dark:bg-gray-800">
         <Outlet />
       </div>
       <Footer />
