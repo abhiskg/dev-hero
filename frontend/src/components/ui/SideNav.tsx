@@ -1,7 +1,7 @@
 const SideNav = () => {
   return (
-    <div>
-      <h2>Course Categories</h2>
+    <div className="bg-white shadow dark:bg-gray-900 dark:text-gray-100">
+      <h2 className="font-semibold">Course Categories</h2>
     </div>
   );
 };
