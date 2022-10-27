@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -8,6 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { sendEmailVerification, User } from "firebase/auth";
 import GoogleLogin from "../../components/login/GoogleLogin";
 import GithubLogin from "../../components/login/GithubLogin";
+import SpinLoader from "../../components/loaders/SpinLoader";
 
 const RegisterSchema = z.object({
   name: z.string().min(1, { message: "Please Enter your name" }),
@@ -22,17 +23,19 @@ type RegisterSchemaType = z.infer<typeof RegisterSchema>;
 
 const Register = () => {
   const authContext = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const {
     handleSubmit,
     register,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema),
   });
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = (data) => {
+    setLoading(true);
     const { name, email, password, profilePic } = data;
     authContext
       ?.createAccount(email, password)
@@ -43,8 +46,10 @@ const Register = () => {
       })
       .catch((err: any) => {
         if (err.message == "Firebase: Error (auth/email-already-in-use).") {
+          setLoading(false);
           toast.error("Email already registered, try Login!");
         } else {
+          setLoading(false);
           toast.error("Register unsuccessful, try again!");
           console.log(err.message);
         }
@@ -59,6 +64,7 @@ const Register = () => {
     authContext?.updateUser(name, profilePic, user).then(() => {
       sendEmailVerification(user).then(() => {
         toast.success("Congratulation! Check your email & verify to login!");
+        setLoading(false);
         reset();
       });
     });
@@ -66,10 +72,8 @@ const Register = () => {
 
   return (
     <div>
-      <div className="mx-auto w-full max-w-md rounded-md p-4 shadow dark:bg-gray-900 dark:text-gray-100 sm:p-8">
-        <h2 className="mb-3 text-center text-3xl font-semibold">
-          Register Now
-        </h2>
+      <div className="mx-auto w-full max-w-md rounded-md bg-white p-4 shadow dark:bg-gray-900 dark:text-gray-100 sm:p-8">
+        <h2 className="mb-5 text-center text-3xl font-semibold">Register</h2>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -84,7 +88,7 @@ const Register = () => {
                 type="text"
                 id="name"
                 {...register("name")}
-                disabled={isSubmitting}
+                disabled={loading}
                 placeholder="Enter your full name"
                 className="input-form"
               />
@@ -100,7 +104,7 @@ const Register = () => {
                 type="profilePic"
                 {...register("profilePic")}
                 id="profilePic"
-                disabled={isSubmitting}
+                disabled={loading}
                 placeholder="Enter the picture link"
                 className="input-form"
               />
@@ -116,7 +120,7 @@ const Register = () => {
                 type="email"
                 {...register("email")}
                 id="email"
-                disabled={isSubmitting}
+                disabled={loading}
                 placeholder="leroy@jenkins.com"
                 className="input-form"
               />
@@ -131,7 +135,7 @@ const Register = () => {
               <input
                 type="password"
                 {...register("password")}
-                disabled={isSubmitting}
+                disabled={loading}
                 id="password"
                 placeholder="*****"
                 className="input-form"
@@ -141,13 +145,20 @@ const Register = () => {
               )}
             </div>
           </div>
-          <button type="submit" disabled={isSubmitting} className="auth-button">
-            Register
+          <button
+            type="submit"
+            className={`auth-button grid place-items-center ${
+              loading && "cursor-not-allowed"
+            }`}
+          >
+            {loading ? <SpinLoader /> : "Register"}
           </button>
         </form>
         <div className="my-4 flex w-full items-center">
           <hr className="w-full dark:text-gray-400" />
-          <p className="w-full px-3 dark:text-gray-400">or login with</p>
+          <p className="w-full px-3 text-center dark:text-gray-400">
+            or login with
+          </p>
           <hr className="w-full dark:text-gray-400" />
         </div>
 
@@ -157,11 +168,11 @@ const Register = () => {
         </div>
 
         <p className="text-center text-sm dark:text-gray-400">
-          Already have an account?
+          Already have an account?{" "}
           <Link
             to="/login"
             rel="noopener noreferrer"
-            className="hover:underline focus:underline"
+            className="text-violet-400 hover:underline focus:underline"
           >
             Login here
           </Link>

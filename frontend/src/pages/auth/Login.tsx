@@ -8,6 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { sendEmailVerification, User } from "firebase/auth";
 import GoogleLogin from "../../components/login/GoogleLogin";
 import GithubLogin from "../../components/login/GithubLogin";
+import SpinLoader from "../../components/loaders/SpinLoader";
 
 const LoginSchema = z.object({
   email: z
@@ -22,6 +23,7 @@ const LoginSchema = z.object({
 type LoginSchemaType = z.infer<typeof LoginSchema>;
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [emailVerified, setEmailVerified] = useState(true);
   const [unVerifiedUser, setUnVerifiedUser] = useState<null | User>(null);
   const authContext = useContext(AuthContext);
@@ -30,7 +32,7 @@ const Login = () => {
     handleSubmit,
     register,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
   });
@@ -42,6 +44,7 @@ const Login = () => {
       ?.signIn(email, password)
       .then(({ user }) => {
         if (!user.emailVerified) {
+          setLoading(false);
           toast.error("Please verify your email to login");
           setUnVerifiedUser(user);
           setEmailVerified(false);
@@ -52,8 +55,13 @@ const Login = () => {
       })
       .catch((err: any) => {
         if (err.message == "Firebase: Error (auth/user-not-found).") {
+          setLoading(false);
           toast.error("User not found, please register first");
+        } else if (err.message == "Firebase: Error (auth/wrong-password).") {
+          setLoading(false);
+          toast.error("Wrong email or password");
         } else {
+          setLoading(false);
           toast.error("Something went wrong, try again later");
         }
       });
@@ -116,21 +124,33 @@ const Login = () => {
               {errors.password?.message && (
                 <p className="error-message">{errors.password?.message}</p>
               )}
+              {!emailVerified && (
+                <p className="text-right text-xs">
+                  did't get verification email?{" "}
+                  <span
+                    className="cursor-pointer text-violet-400 hover:underline"
+                    onClick={handleResendVerificationEmail}
+                  >
+                    resend
+                  </span>
+                </p>
+              )}
             </div>
-            {!emailVerified && (
-              <p className="text-sm">
-                did't get verification email?{" "}
-                <span onClick={handleResendVerificationEmail}>resend</span>
-              </p>
-            )}
           </div>
-          <button type="submit" className="auth-button">
-            Login
+          <button
+            type="submit"
+            className={`auth-button grid place-items-center ${
+              loading && "cursor-not-allowed"
+            }`}
+          >
+            {loading ? <SpinLoader /> : "login"}
           </button>
         </form>
         <div className="my-4 flex w-full items-center">
           <hr className="w-full dark:text-gray-400" />
-          <p className="w-full px-3 dark:text-gray-400">or login with</p>
+          <p className="w-full px-3 text-center dark:text-gray-400">
+            or login with
+          </p>
           <hr className="w-full dark:text-gray-400" />
         </div>
 
@@ -140,13 +160,13 @@ const Login = () => {
         </div>
 
         <p className="text-center text-sm dark:text-gray-400">
-          Dont have account?
+          Not a member?{" "}
           <Link
             to="/register"
             rel="noopener noreferrer"
-            className="hover:underline focus:underline"
+            className="text-violet-400 hover:underline focus:underline"
           >
-            Create here
+            SignUp
           </Link>
         </p>
       </div>

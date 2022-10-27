@@ -23,7 +23,7 @@ const GoogleLogin = () => {
       onClick={handleGoogleLogin}
       aria-label="Login with Google"
       type="button"
-      className="flex w-full items-center justify-center space-x-4 rounded-md border p-4 focus:ring-2 focus:ring-violet-400 focus:ring-offset-1 dark:border-gray-400"
+      className="auth-login"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
