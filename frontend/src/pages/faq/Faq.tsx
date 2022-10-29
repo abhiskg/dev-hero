@@ -1,4 +1,8 @@
+import useDocTitle from "../../hooks/useDocTitle";
+
 const Faq = () => {
+  useDocTitle("FAQ");
+
   return (
     <section className="pb-28 dark:bg-gray-800 dark:text-gray-100">
       <div className="inner-width mx-auto flex flex-col justify-center p-4 md:p-8">

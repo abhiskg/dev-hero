@@ -1,10 +1,12 @@
 import { useLoaderData } from "react-router-dom";
 import CourseCard from "../../components/cards/CourseCard";
 import SideNav from "../../components/ui/SideNav";
+import useDocTitle from "../../hooks/useDocTitle";
 import { CourseType } from "../../types/courseType";
 
 const Courses = () => {
   const courses = useLoaderData() as CourseType[];
+  useDocTitle("Courses");
 
   return (
     <div className="custom-width mx-auto flex gap-5">

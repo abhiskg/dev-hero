@@ -1,19 +1,25 @@
+import { createRef } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import SideNav from "../../components/ui/SideNav";
 import { CourseType } from "../../types/courseType";
+// import ReactToPdf from "react-to-pdf";
 
 const CourseDetails = () => {
   const course = useLoaderData() as CourseType;
-  console.log(course);
+  const ref = createRef<any>();
+
   return (
     <div className="custom-width mx-auto flex gap-5">
       <div className=" w-52 rounded bg-white  p-3 shadow dark:bg-gray-900 dark:text-gray-100">
         <SideNav />
       </div>
-      <div className="flex-1">
+      <div ref={ref} className="flex-1">
         <h1 className="mb-5 text-center text-2xl font-semibold">
           {course.name}
         </h1>
+        {/* <ReactToPdf targetRef={ref} filename="code-example.pdf">
+          {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
+        </ReactToPdf> */}
         <img
           src={course.image}
           alt={course.alt}

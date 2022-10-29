@@ -29,3 +29,5 @@ app.get("/course/:id", (req, res) => {
 app.listen(port, () => {
   console.log("Server running");
 });
+
+module.exports = app;

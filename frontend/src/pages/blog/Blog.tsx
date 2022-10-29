@@ -1,4 +1,7 @@
+import useDocTitle from "../../hooks/useDocTitle";
+
 const Blog = () => {
+  useDocTitle("Blog");
   return (
     <div className="custom-width mx-auto">
       <h2 className="text-center text-2xl font-bold dark:text-gray-100">

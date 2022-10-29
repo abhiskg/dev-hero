@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 import userIcon from "../../assets/icons/userIcon.svg";
-import logo from "../../assets/icons/logo.svg";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
