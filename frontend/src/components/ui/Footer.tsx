@@ -24,7 +24,7 @@ const Footer = () => {
           </div>
           <span className="text-2xl font-semibold">Dev Hero</span>
         </div>
-        <div className="flex gap-5">
+        <div className="flex flex-wrap gap-5">
           <Link to="/register" className="footer-link-text">
             Register
           </Link>
