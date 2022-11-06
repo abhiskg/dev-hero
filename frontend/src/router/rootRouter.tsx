@@ -60,7 +60,7 @@ const rootRouter = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/course/${params.id}`),
+          fetch(`http://localhost:5000/courses/${params.id}`),
       },
     ],
   },
