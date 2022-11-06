@@ -1,25 +1,14 @@
-import { createRef } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import SideNav from "../../components/ui/SideNav";
 import { CourseType } from "../../types/courseType";
-// import ReactToPdf from "react-to-pdf";
 
 const CourseDetails = () => {
   const course = useLoaderData() as CourseType;
-  const ref = createRef<any>();
 
   return (
-    <div className="custom-width mx-auto flex gap-5">
-      <div className=" w-52 rounded bg-white  p-3 shadow dark:bg-gray-900 dark:text-gray-100">
-        <SideNav />
-      </div>
-      <div ref={ref} className="flex-1">
-        <h1 className="mb-5 text-center text-2xl font-semibold">
-          {course.name}
-        </h1>
-        {/* <ReactToPdf targetRef={ref} filename="code-example.pdf">
-          {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
-        </ReactToPdf> */}
+    <div className="custom-width mx-auto dark:text-gray-100">
+      <div className="relative flex-1">
+        <h1 className="header-style mb-5 pt-6">{course.name}</h1>
+
         <img
           src={course.image}
           alt={course.alt}
@@ -27,16 +16,20 @@ const CourseDetails = () => {
         />
 
         <div className="mt-3 flex items-center justify-between">
-          <div>Course Duration: {course.duration} hours </div>
-          <div>Ratings: {course.ratings}</div>
+          <div className=" font-medium">
+            Course Duration: {course.duration} hours{" "}
+          </div>
+          <div className="font-medium">Ratings: {course.ratings}</div>
         </div>
 
-        <div>Author: {course.author}</div>
-        <div>Exclusive Price: {course.price}$</div>
-        <div>{course.description}</div>
+        <div className="font-medium">Author: {course.author}</div>
+        <div className="font-medium">Exclusive Price: {course.price}$</div>
+        <div className="mt-5 text-gray-800 dark:text-gray-400">
+          {course.description}
+        </div>
         <div className="my-10 flex justify-center">
           <Link
-            to="/checkout"
+            to={`/checkout/${course.id}`}
             className=" rounded-md bg-violet-400 py-2 px-3 font-medium shadow-md hover:bg-violet-500"
           >
             Get premium access

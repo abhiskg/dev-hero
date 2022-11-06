@@ -42,7 +42,7 @@ const rootRouter = createBrowserRouter([
         path: "/course/:id",
         element: <CourseDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/course/${params.id}`),
+          fetch(`http://localhost:5000/courses/${params.id}`),
       },
       {
         path: "/faq",
@@ -53,12 +53,14 @@ const rootRouter = createBrowserRouter([
         element: <Blog />,
       },
       {
-        path: "/checkout",
+        path: "/checkout/:id",
         element: (
           <PrivateRoute>
             <Checkout />
           </PrivateRoute>
         ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/course/${params.id}`),
       },
     ],
   },
