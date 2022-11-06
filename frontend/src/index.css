@@ -18,6 +18,9 @@
   .auth-login {
     @apply flex w-full items-center justify-center space-x-4 rounded-md border p-4 outline-2 hover:bg-gray-100 hover:outline hover:outline-violet-400 dark:border-gray-400 dark:hover:bg-gray-800;
   }
+  .header-style {
+    @apply mb-12 text-center text-3xl font-bold  sm:text-4xl md:text-5xl;
+  }
 }
 
 .custom-width {
