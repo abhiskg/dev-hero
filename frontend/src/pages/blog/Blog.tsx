@@ -4,9 +4,7 @@ const Blog = () => {
   useDocTitle("Blog");
   return (
     <div className="custom-width mx-auto">
-      <h2 className="text-center text-2xl font-bold dark:text-gray-100">
-        Blogs
-      </h2>
+      <h2 className="header-style dark:text-gray-100">Blogs</h2>
       <div className="mt-10  rounded-md bg-white p-3 shadow-md dark:bg-gray-900">
         <h2 className="text-lg font-medium dark:text-gray-200">
           Q1: What is cors?
