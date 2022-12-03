@@ -2,12 +2,19 @@
 
 **Website Link:** [https://dev-hero-js.web.app/](https://dev-hero-js.web.app/)
 
+**Achievements:**
+
+- Google, Github, and Email/Password authentication are implemented securely using firebase
+- In order to implement dark mode, the React Context API and local storage are used.
+- The private route component blocks unauthorized users from accessing the checkout page.
+- ExpressJS is used to send JSON data from the server to the client.
+- React hook form and Zod provides proper form control and validation on the front end.
+
 **Features:**
 
-- Three types of authentication (Google, Github, Email/Password) is implemented securely using firebase.
-- Dark mode is utilized using context and localhost for a better user experience.
-- React hook form and Zod gives proper form control and validation.
-- Different JSON data is sent from the server side to the client side using express js.
-- One route is kept under private route so that only the verified logged-in user can access that.
+- Users can log in via Google, Github, or Email/Password.
+- Several courses are present with their details page.
+- Dark mode is present for a better user experience.
+- Logged-in users can check out any course.
 
-**Technologies Used:** React, React-router, Tailwind CSS, Firebase, React-hook-form, Zod, React-hot-toast.
+**Technologies Used:** Typescript, React, React-router, Tailwind CSS, Firebase, Express, React-hook-form, Zod, React-hot-toast.
