@@ -36,13 +36,13 @@ const rootRouter = createBrowserRouter([
       {
         path: "/courses",
         element: <Courses />,
-        loader: () => fetch("http://localhost:5000/courses"),
+        loader: () => fetch("https://dev-hero.vercel.app/courses"),
       },
       {
         path: "/course/:id",
         element: <CourseDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/courses/${params.id}`),
+          fetch(`https://dev-hero.vercel.app/courses/${params.id}`),
       },
       {
         path: "/faq",
@@ -60,7 +60,7 @@ const rootRouter = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/courses/${params.id}`),
+          fetch(`https://dev-hero.vercel.app/courses/${params.id}`),
       },
     ],
   },

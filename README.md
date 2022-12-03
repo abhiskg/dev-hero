@@ -1,6 +1,6 @@
 <h2>Dev Hero</h2>
 
-**Website Link:** [https://dev-hero-js.web.app/](https://dev-hero-js.web.app/)
+**Website Link:** [https://dev-hero-70807.web.app/](https://dev-hero-70807.web.app/)
 
 **Achievements:**
 
